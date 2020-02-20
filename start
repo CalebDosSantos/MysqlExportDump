@@ -1,0 +1,25 @@
+#!/bin/bash
+
+database=$1
+dumpfile=Dump/actualDump.sql
+dateLog=`date`
+
+IFS="|"
+while read f1 f2 f3 f4 f5;do
+  serv=$f1
+  host=$f2
+  port=$f3
+  user=$f4
+  pswd=$f5
+
+  mysql -h$host -p$port -u$user -P$pswd -D$database <$dumpfile
+  #echo $?
+  if [ $? -eq 0 ] 
+  then
+    echo "SUCCESS "$dateLog" "$serv >> Logs/logs
+  else
+    echo "ERROR "$dateLog" "$serv >> Logs/logs
+  fi
+
+done<Servers/mysqlServers.csv
+
