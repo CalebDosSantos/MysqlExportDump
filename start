@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dumpfile=Dump/actualDump.sql
+dumpfile=Dump/currentDump.sql
 dateLog=`date`
 
 IFS="|"
@@ -13,10 +13,10 @@ while read f1 f2 f3 f4 f5;do
 
   if [ -z $1 ]
   then
-  mysql -h$host -p$port -u$user -P$pswd  <$dumpfile
+    mysql -h$host -p$port -u$user -P$pswd  <$dumpfile
   else
-database=$1
-  mysql -h$host -p$port -u$user -P$pswd -D$database <$dumpfile
+    database=$1
+    mysql -h$host -p$port -u$user -P$pswd -D$database <$dumpfile
   fi
 
   if [ $? -eq 0 ] 
