@@ -1,6 +1,5 @@
 #!/bin/bash
 
-database=$1
 dumpfile=Dump/actualDump.sql
 dateLog=`date`
 
@@ -12,8 +11,14 @@ while read f1 f2 f3 f4 f5;do
   user=$f4
   pswd=$f5
 
+  if [ -z $1 ]
+  then
+  mysql -h$host -p$port -u$user -P$pswd  <$dumpfile
+  else
+database=$1
   mysql -h$host -p$port -u$user -P$pswd -D$database <$dumpfile
-  #echo $?
+  fi
+
   if [ $? -eq 0 ] 
   then
     echo "SUCCESS "$dateLog" "$serv >> Logs/logs
